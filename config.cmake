@@ -9,7 +9,7 @@
 
 option(WITH_OMP "Whether OpenMP thread parallisation should be enabled" TRUE)
 
-option(WITH_MPI "Whether DFTB+ should support MPI-parallelism" FALSE)
+option(WITH_MPI "Whether DFTB+ should support MPI-parallelism" TRUE)
 # If you build an MPI-parallised binary, consider to set WITH_OMP (OpenMP thread parallelisaton) to
 # FALSE unless you want hybrid parallelisation (for experts only).
 
@@ -21,7 +21,7 @@ option(WITH_ELSI "Whether DFTB+ with MPI-parallelism should use the ELSI librari
 # Works only with MPI-parallel build. If WITH_GPU was selected above, the ELSI library must be
 # enabled (and must have been built with GPU support).
 
-option(WITH_TRANSPORT "Whether transport via libNEGF should be included." FALSE)
+option(WITH_TRANSPORT "Whether transport via libNEGF should be included." TRUE)
 # Works only when building static libraries (see option BUILD_SHARED_LIBS)
 
 option(WITH_POISSON "Whether the Poisson-solver should be included" ${WITH_TRANSPORT})
@@ -36,9 +36,9 @@ option(WITH_SOCKETS "Whether socket communication should be allowed for" FALSE)
 option(WITH_ARPACK "Whether the ARPACK library should be included (needed for TD-DFTB)" FALSE)
 # Works only with non-MPI (serial) build, needed for Casida linear response
 
-option(WITH_SDFTD3 "Whether the s-dftd3 library should be included" FALSE)
+option(WITH_SDFTD3 "Whether the s-dftd3 library should be included" TRUE)
 
-option(WITH_MBD "Whether DFTB+ should be built with many-body-dispersion support" FALSE)
+option(WITH_MBD "Whether DFTB+ should be built with many-body-dispersion support" TRUE)
 
 option(WITH_PLUMED "Whether metadynamics via the PLUMED2 library should be allowed for" FALSE)
 
@@ -50,7 +50,7 @@ option(WITH_API "Whether public API should be included and the DFTB+ library ins
 # This will also install necessary include and module files and further libraries needed to link the
 # DFTB+ library.
 
-option(WITH_PYTHON "Whether the Python components of DFTB+ should be tested and installed" FALSE)
+option(WITH_PYTHON "Whether the Python components of DFTB+ should be tested and installed" TRUE)
 # Use this option to test and install the Python components of DFTB+. Note, that the Python API
 # based tools will only be considered, if shared library bulding (BUILD_SHARED_LIBS) and support for
 # the general API (WITH_API) and dynamic loading (ENABLE_DYNAMIC_LOADING) had been enabled.
