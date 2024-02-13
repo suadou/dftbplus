@@ -4120,7 +4120,7 @@ contains
     @:PROPAGATE_ERROR(errStatus)
     if (allocated(this%dispersion)) then
       call this%dispersion%updateOnsiteCharges(this%qNetAtom, orb, referenceN0,&
-          & this%speciesAll(:this%nAtom), .true.)
+          & this%speciesAll(:this%nAtom), .true., .false.)
     end if
 
     call updateH(this, this%H1, ints, this%ham0, this%speciesAll, this%qq, q0, coord, orb,&
@@ -4204,7 +4204,7 @@ contains
     @:PROPAGATE_ERROR(errStatus)
     if (allocated(this%dispersion)) then
       call this%dispersion%updateOnsiteCharges(this%qNetAtom, orb, referenceN0,&
-          & this%speciesAll(:this%nAtom), .true.)
+          & this%speciesAll(:this%nAtom), .true., .false.)
     end if
 
     call updateH(this, this%H1, ints, this%ham0, this%speciesAll, this%qq, q0, coord, orb,&
@@ -4478,7 +4478,7 @@ contains
     @:PROPAGATE_ERROR(errStatus)
     if (allocated(this%dispersion)) then
       call this%dispersion%updateOnsiteCharges(this%qNetAtom, orb, referenceN0,&
-          & this%speciesAll(:this%nAtom), .true.)
+          & this%speciesAll(:this%nAtom), .true., .false.)
     end if
 
     call updateH(this, this%H1, ints, this%ham0, this%speciesAll, this%qq, q0, coord, orb,&
