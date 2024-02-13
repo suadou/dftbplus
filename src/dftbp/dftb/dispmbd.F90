@@ -13,7 +13,7 @@ module dftbp_dftb_dispmbd
   use dftbp_common_accuracy, only: dp, mc, lc
   use dftbp_common_constants, only: symbolToNumber
   use dftbp_common_environment, only: TEnvironment
-  use dftbp_common_globalenv, only: stdOut
+  use dftbp_common_globalenv, only: stdOut, tIoProc
   use dftbp_common_status, only : TStatus
   use dftbp_dftb_dispiface, only: TDispersionIface
   use dftbp_dftb_periodic, only: TNeighbourList
@@ -321,7 +321,7 @@ contains
 
 
   !> Update charges in the MBD model
-  subroutine updateOnsiteCharges(this, qNetAtom, orb, referenceN0, species0, tCanUseCharges)
+  subroutine updateOnsiteCharges(this, qNetAtom, orb, referenceN0, species0, tCanUseCharges,  tWriteCharges)
 
     !> Instance
     class(TDispMbd), intent(inout) :: this
@@ -341,6 +341,9 @@ contains
     !> Are these charges from a converged SCC calculation/are suitable to evaluate MBD from
     !> (i.e. non-converged but can be used)
     logical, intent(in) :: tCanUseCharges
+    
+    !> Should CPA ratios be printed?
+    logical, intent(in) :: tWriteCharges
 
     real(dp), allocatable :: cpa(:), free_charges(:)
     integer :: nAtom, i_atom, i_spec
@@ -367,6 +370,9 @@ contains
 
       ! charges have been updated though, so are available for property evaluations
       this%chargesUpdated = .true.
+      if (tIoProc .and. tWriteCharges) then
+        call writeCPAratios(cpa)
+      endif
     else
       this%chargesUpdated = .false.
     end if
@@ -412,6 +418,22 @@ contains
     write(stdOut, "(A,A)") '* Libmbd: ', str
 
   end subroutine mbdPrinter
+  
+    !> Write CPA output
+  subroutine writeCPAratios(cpa)
+
+    real(dp), intent(in) :: cpa(:)
+    integer :: nAtom, iAtom, fIDcpa
+
+    nAtom = size(cpa)
+    open(fIDcpa, file="CPA_ratios.out", action="write", status="replace", position="rewind")
+    write(fIDcpa,*) "       iAtom       CPA ratio"
+    do iAtom=1, nAtom
+        write(fIDcpa,*) iAtom, '  ', cpa(iAtom)
+    enddo
+    close(fIDcpa)
+
+  end subroutine writeCPAratios
 
 
 end module dftbp_dftb_dispmbd

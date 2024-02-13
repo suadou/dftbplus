@@ -167,7 +167,7 @@ module dftbp_dftb_dispiface
 contains
 
   !> update charges, dummy interface if not needed
-  subroutine updateOnsiteCharges(this, qNetAtom, orb, referenceN0, species0, tCanUseCharges)
+  subroutine updateOnsiteCharges(this, qNetAtom, orb, referenceN0, species0, tCanUseCharges, tWriteCharges)
 
     !> data structure
     class(TDispersionIface), intent(inout) :: this
@@ -186,6 +186,9 @@ contains
 
     !> Are the charges from self-consistent output or otherwise suitable to use if needed
     logical, intent(in) :: tCanUseCharges
+    
+    !> Should CPA ratios be printed?
+    logical, intent(in) :: tWriteCharges
 
   end subroutine updateOnsiteCharges
 
