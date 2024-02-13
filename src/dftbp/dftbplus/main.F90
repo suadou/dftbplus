@@ -199,7 +199,7 @@ contains
     !> Which state is being calculated in the determinant loop?
     integer :: iDet
     logical :: isUnReduced
-
+    
     type(TStatus) :: errStatus
     real(dp), pointer :: pDynMatrix(:,:), pDipDerivMatrix(:,:), pPolDerivMatrix(:,:,:)
 
@@ -1452,7 +1452,7 @@ contains
 
         if (allocated(this%dispersion) .and. .not. tConverged) then
           call this%dispersion%updateOnsiteCharges(this%qNetAtom, this%orb, this%referenceN0,&
-              & this%species0, tConverged)
+              & this%species0, tConverged, this%tWriteCpa)
           call calcDispersionEnergy(this%dispersion,&
               & this%dftbEnergy(this%deltaDftb%iDeterminant)%atomDisp,&
               & this%dftbEnergy(this%deltaDftb%iDeterminant)%Edisp, this%iAtInCentralRegion)
@@ -1492,7 +1492,7 @@ contains
       ! evaluation post-hoc if SCC was not achieved but the input settings are to proceed with
       ! non-converged SCC.
       call this%dispersion%updateOnsiteCharges(this%qNetAtom, this%orb, this%referenceN0,&
-          & this%species0, tConverged .or. .not. this%isSccConvRequired)
+          & this%species0, tConverged,  this%tWriteCpa .or. .not. this%isSccConvRequired)
       call calcDispersionEnergy(this%dispersion,&
           & this%dftbEnergy(this%deltaDftb%iDeterminant)%atomDisp,&
           & this%dftbEnergy(this%deltaDftb%iDeterminant)%Edisp,&
@@ -7845,6 +7845,9 @@ contains
     !> Is the extended Lagrangian being used for MD
     logical, intent(in) :: isXlbomd
 
+    !> Whether charges should be written
+    logical :: tWriteCharges
+
     !> Are there orbital potentials present
     type(TDftbU), intent(in), allocatable :: dftbU
 
@@ -8056,7 +8059,7 @@ contains
           qNetAtom(:) = reks%qNetAtomL(:,iL)
         end if
         call dispersion%updateOnsiteCharges(qNetAtom, orb, referenceN0,&
-            & species0, tConverged)
+            & species0, tConverged, tWriteCharges)
         call calcDispersionEnergy(dispersion, energy%atomDisp, energy%Edisp,&
             & iAtInCentralRegion)
       end if

@@ -482,6 +482,7 @@ module dftbp_dftbplus_inputdata
     logical :: oldSKInter = .false.
     logical :: tWriteHS = .false.
     logical :: tWriteRealHS = .false.
+    logical :: tWriteCpa = .false.
     logical :: tMinMemory = .false.
 
     !> Potential shifts are read from file

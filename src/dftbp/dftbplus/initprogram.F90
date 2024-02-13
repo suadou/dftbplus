@@ -841,6 +841,9 @@ module dftbp_dftbplus_initprogram
     !> Should HS (sparse) be printed?
     logical :: tWriteRealHS
 
+    !> Should CPA ratios be printed?
+    logical :: tWriteCpa
+
     !> Program run id
     integer :: runId
 
@@ -1532,6 +1535,10 @@ contains
 
     this%tWriteHS = input%ctrl%tWriteHS
     this%tWriteRealHS = input%ctrl%tWriteRealHS
+    
+    
+    this%tWriteCpa = input%ctrl%tWriteCpa
+
 
     select case(this%hamiltonianType)
     case default

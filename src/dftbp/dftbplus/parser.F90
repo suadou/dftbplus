@@ -4061,6 +4061,7 @@ contains
     end if
     call getChildValue(node, "WriteHS", ctrl%tWriteHS, .false.)
     call getChildValue(node, "WriteRealHS", ctrl%tWriteRealHS, .false.)
+    call getChildValue(node, "WriteCPA", ctrl%tWriteCpa, .false.)
     call renameChildren(node, "MinimizeMemoryUsage", "MinimiseMemoryUsage")
     call getChildValue(node, "MinimiseMemoryUsage", ctrl%tMinMemory, .false., child=child)
     if (ctrl%tMinMemory) then
